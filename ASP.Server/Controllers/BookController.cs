@@ -9,6 +9,7 @@ using ASP.Server.Models;
 using ASP.Server.ViewModels;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using NSwag.Annotations;
 
 namespace ASP.Server.Controllers
 {
@@ -36,6 +37,17 @@ namespace ASP.Server.Controllers
 
             // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
             return View(new CreateBookViewModel() { AllGenres = libraryDbContext.Genre});
+        }
+        
+        [HttpPost("/delete/{id}")]
+        [OpenApiIgnore]
+        public ActionResult Delete(int id)
+        {
+            var bookToDelete = libraryDbContext.Books.SingleOrDefault(b => b.Id == id);
+            if (bookToDelete == null) return NotFound();
+            libraryDbContext.Books.Remove(bookToDelete);
+            libraryDbContext.SaveChanges();
+            return RedirectToAction("List");
         }
     }
 }

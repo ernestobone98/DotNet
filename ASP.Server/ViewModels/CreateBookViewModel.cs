@@ -17,6 +17,9 @@ namespace ASP.Server.ViewModels
         // Liste des genres séléctionné par l'utilisateur
         [Required(ErrorMessage = "You need at least 1 genre"), MinLength(1)]
         public IEnumerable<int> Genres { get; set; }
+        
+        [Required]
+        public Author Author { get; set; }
 
         // Liste des genres a afficher à l'utilisateur
         public IEnumerable<Genre> AllGenres { get; init; }

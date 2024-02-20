@@ -46,7 +46,7 @@ namespace ASP.Server.Database
                                    "letters start dropping on the doormat at number four, Privet Drive. Addressed in " +
                                    "green ink on yellowish parchment with a purple seal, they are swiftly confiscated by " +
                                    "his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed",
-                                   Genres = new() { SF, Classic }
+                                   Genres = new List<Genre>() { SF, Classic }
                                });
             bookDbContext.Books.AddRange(
                                new Book()
@@ -58,7 +58,7 @@ namespace ASP.Server.Database
                                    "was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's " +
                                    "packing his bags, Harry receives a warning from a strange, impish creature named Dobby " +
                                    "who says that if Harry Potter returns to Hogwarts, disaster will strike.",
-                                   Genres = new() { SF, Classic }
+                                   Genres = new List<Genre>() { SF, Classic }
                                });
 
             bookDbContext.Books.AddRange(
@@ -70,7 +70,7 @@ namespace ASP.Server.Database
                                    Content = "Harry Potter is lucky to reach the age of thirteen, since he has already survived" +
                                    " the murderous attacks of the feared Dark Lord on more than one occasion. But his hopes " +
                                    "for a quiet term concentrating on Quidditch are dashed when a maniacal mass",
-                                   Genres = new() { SF, Classic }
+                                   Genres = new List<Genre>() { SF, Classic }
                                });
 
             bookDbContext.SaveChanges();

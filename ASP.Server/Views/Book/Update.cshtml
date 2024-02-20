@@ -1,0 +1,80 @@
+@using ASP.Server.Controllers
+@using ASP.Server.ViewModels
+@model UpdateBookViewModel
+@{
+    ViewData["Title"] = "Update Book";
+}
+<style>
+.input-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+input, textarea, select {
+    flex-basis: 85%;
+}
+label {
+    flex-basis: 10%;
+}
+</style>
+
+<!-- Voici une façon de faire, mais ce n'est pas la seule, à vous de jouer ! -->
+<form asp-controller="Book" asp-action="Update1">
+    <div class="input-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" readonly />
+    </div>
+    <span asp-validation-for="Id" class="text-danger"></span>
+    <div class="input-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+    <span asp-validation-for="Name" class="text-danger"></span>
+    
+    <div class="input-group">
+            <label asp-for="Author"></label>
+            <input asp-for="Author.Name" />
+        </div>
+        <span asp-validation-for="Author" class="text-danger"></span>
+    
+    <div class="input-group">
+                    <label asp-for="Genres"></label>
+                    <!--Si la page rend une erreur à cette ligne, c'est que vous n'avez pas envoyé la liste des genres dans le Controller !!! ! -->
+                    <select asp-for="Genres" asp-items="@(new SelectList(Model.AllGenres, "Id", "Id"))">
+                        @if (Model.Genres != null)
+                        {
+                            @foreach (var genre in Model.AllGenres)
+                            {
+                                if (Model.Genres.Any((g) => g.Id == genre.Id))
+                                {
+                                    <option value="@genre.Id" selected>@genre.Name</option>
+                                }
+                                else
+                                {
+                                    Console.WriteLine(Model.Genres.Any((g) => g.Id == genre.Id));
+                                    <option value="@genre.Id"> @genre.Name </option>
+                                }
+
+                            }
+                        }
+                    </select>
+                </div>
+    <span asp-validation-for="Genres" class="text-danger"></span>
+        
+            
+    <div class="input-group">
+                        <label asp-for="Price"></label>
+                        <textarea asp-for="Price"></textarea>
+                        </div>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        
+    
+    <div class="input-group">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content"></textarea>
+    </div>
+    <span asp-validation-for="Content" class="text-danger"></span>
+        
+    <input type="submit" value="Update" style="width: 100%; margin-top: 50px" />
+</form>

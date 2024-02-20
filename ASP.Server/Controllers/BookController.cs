@@ -49,5 +49,51 @@ namespace ASP.Server.Controllers
             libraryDbContext.SaveChanges();
             return RedirectToAction("List");
         }
+        
+        [HttpGet("/update/{id}")]
+        [OpenApiIgnore]
+        public ActionResult Update(int id)
+        {
+            var book = libraryDbContext.Books.Include(b => b.Genres).Include(b => b.Author).SingleOrDefault(b => b.Id == id);
+            if (book == null) return NotFound();
+            var bookToUpdate = new UpdateBookViewModel();
+            bookToUpdate.Genres = book.Genres;
+            bookToUpdate.Author = book.Author;
+            bookToUpdate.Content = book.Content;
+            bookToUpdate.Name = book.Name;
+            bookToUpdate.Id = book.Id;
+            bookToUpdate.Price = book.Price;
+            bookToUpdate.AllGenres = libraryDbContext.Genre;
+            return View(bookToUpdate);
+        }
+        
+        public ActionResult Update1(Book updatedBook)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Si le modèle n'est pas valide, retourner le formulaire avec les erreurs de validation
+                return NotFound(); //View("Update", updatedBook);
+            }
+
+            var existingBook = libraryDbContext.Books.Include(b => b.Author).SingleOrDefault(b => b.Id == updatedBook.Id);
+            if (existingBook == null)
+            {
+                // Si le livre à mettre à jour n'existe pas, retourner une réponse NotFound
+                return NotFound();
+            }
+
+            // Mettre à jour les propriétés du livre existant avec les nouvelles valeurs
+            existingBook.Name = updatedBook.Name;
+            existingBook.Content = updatedBook.Content; // Update content here
+            //existingBook.Genres = libraryDbContext.Genres.ToList();
+            existingBook.Author = updatedBook.Author;
+
+            libraryDbContext.SaveChanges();
+
+            // Rediriger vers l'action List pour afficher la liste mise à jour des livres
+            return RedirectToAction("List");
+        }
+
+        
     }
 }

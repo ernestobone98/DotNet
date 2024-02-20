@@ -13,7 +13,15 @@ namespace ASP.Server.ViewModels
         public String Name { get; set; }
 
         // Ajouter ici tous les champ que l'utilisateur devra remplir pour ajouter un livre
+        [Required]
+        public String Author { get; set; }
 
+        [Required]
+        public float Price { get; set; }
+
+        [Required] 
+        public String Content { get; set; }
+        
         // Liste des genres séléctionné par l'utilisateur
         [Required(ErrorMessage = "You need at least 1 genre"), MinLength(1)]
         public IEnumerable<int> Genres { get; set; }

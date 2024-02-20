@@ -5,7 +5,7 @@
     ViewData["Title"] = "Add a book";
 }
 <style>
-.input-group {
+.input-group {                                                                                                                                                                                                                  
     margin-top:10px;
     display:flex;
     justify-content:space-between;
@@ -26,6 +26,24 @@ label {
         <input asp-for="Name" />
     </div>
     <span asp-validation-for="Name" class="text-danger"></span>
+    
+    <div class="input-group">
+            <label asp-for="Author"></label>
+            <input asp-for="Author" />
+    </div>
+    <span asp-validation-for="Author" class="text-danger"></span>
+    
+    <div class="input-group">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" />
+    </div>
+    <span asp-validation-for="Price" class="text-danger"></span>
+    
+    <div class="input-group">
+                    <label asp-for="Content"></label>
+                    <input asp-for="Content" />
+    </div>
+    <span asp-validation-for="Content" class="text-danger"></span>
     <div class="input-group">
         <label asp-for="Genres"></label>
         <!--Si la page rend une erreur a cette ligne, c'est que vous n'avez pas envoyé la liste des genres dans le Controller !!! ! -->

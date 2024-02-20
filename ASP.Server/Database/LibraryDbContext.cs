@@ -14,5 +14,6 @@ namespace ASP.Server.Database
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Genre> Genre { get; internal set; }
+        public DbSet<Author> Author { get; internal set; }
     }
 }

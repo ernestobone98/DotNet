@@ -20,6 +20,7 @@ namespace ASP.Server.Controllers
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
             IEnumerable<Book> ListBooks = libraryDbContext.Books;
+            
             return View(ListBooks);
         }
 

@@ -13,10 +13,18 @@ namespace ASP.Server.Database
     {
         public static void Initialize(LibraryDbContext bookDbContext)
         {
-
             if (bookDbContext.Books.Any())
                 return;
-
+            
+            Author jkRolling;
+            bookDbContext.Author.AddRange(
+                jkRolling = new Author()
+                {
+                    Name = "J.K. Rowling",
+                    Books = new List<Book>()
+                });
+            bookDbContext.SaveChanges();
+            
             Genre SF, Classic, Romance, Thriller;
             bookDbContext.Genre.AddRange(
                 SF = new Genre(),
@@ -25,21 +33,12 @@ namespace ASP.Server.Database
                 Thriller = new Genre()
             );
             bookDbContext.SaveChanges();
-
-            // Une fois les moèles complété Vous pouvez faire directement
-            // new Book() { Author = "xxx", Name = "yyy", Price = n.nnf, Content = "ccc", Genres = new() { Romance, Thriller } }
-            bookDbContext.Books.AddRange(
-                new Book() { },
-                new Book() { },
-                new Book() { },
-                new Book() { }
-            );
+            
             // Vous pouvez initialiser la BDD ici
-
             bookDbContext.Books.AddRange(
                                new Book()
                                {
-                                   Author = "J.K. Rowling",
+                                   Author = jkRolling,
                                    Name = "Harry Potter and the Philosopher's Stone",
                                    Price = 9.99f,
                                    Content = "Harry Potter has never even heard of Hogwarts when the " +
@@ -51,7 +50,7 @@ namespace ASP.Server.Database
             bookDbContext.Books.AddRange(
                                new Book()
                                {
-                                   Author = "J.K. Rowling",
+                                   Author = jkRolling,
                                    Name = "Harry Potter and the Chamber of Secrets",
                                    Price = 9.99f,
                                    Content = "The Dursleys were so mean and hideous that summer that all Harry Potter wanted " +
@@ -64,7 +63,7 @@ namespace ASP.Server.Database
             bookDbContext.Books.AddRange(
                                new Book()
                                {
-                                   Author = "J.K. Rowling",
+                                   Author = jkRolling,
                                    Name = "Harry Potter and the Prisoner of Azkaban",
                                    Price = 9.99f,
                                    Content = "Harry Potter is lucky to reach the age of thirteen, since he has already survived" +

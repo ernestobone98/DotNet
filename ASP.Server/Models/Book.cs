@@ -16,7 +16,7 @@ namespace ASP.Server.Models
         // N'oublier pas qu'un livre peut avoir plusieur genres
 
         public string Name { get; set; }
-        public string Author { get; set; }
+        public Author Author { get; set; }
         public float Price { get; set; }
         public string Content { get; set; }
         [Required] public IEnumerable<Genre> Genres { get; set; }

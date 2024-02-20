@@ -9,6 +9,12 @@
     <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
     @foreach (var book in Model)
     {
+        <div class="book">
+			<h2>@book.Name</h2>
+			<p>@book.Author</p>
+			<p>@book.Price</p>
+			
+		</div>
     }
 </div>
 

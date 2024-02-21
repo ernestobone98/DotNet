@@ -23,25 +23,25 @@ label {
 <form asp-controller="Book" asp-action="Update1">
     <div class="input-group">
         <label asp-for="Id"></label>
-        <input asp-for="Id" readonly />
+        <input name="Id" asp-for="Id" readonly />
     </div>
     <span asp-validation-for="Id" class="text-danger"></span>
     <div class="input-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" />
+        <input name="Name" asp-for="Name" />
     </div>
     <span asp-validation-for="Name" class="text-danger"></span>
     
     <div class="input-group">
             <label asp-for="Author"></label>
-            <input asp-for="Author.Name" />
+            <input name="Author" asp-for="Author.Name" />
         </div>
         <span asp-validation-for="Author" class="text-danger"></span>
     
     <div class="input-group">
                     <label asp-for="Genres"></label>
                     <!--Si la page rend une erreur à cette ligne, c'est que vous n'avez pas envoyé la liste des genres dans le Controller !!! ! -->
-                    <select asp-for="Genres" asp-items="@(new SelectList(Model.AllGenres, "Id", "Id"))">
+                    <select asp-for="Genres">
                         @if (Model.Genres != null)
                         {
                             @foreach (var genre in Model.AllGenres)
@@ -65,16 +65,16 @@ label {
             
     <div class="input-group">
                         <label asp-for="Price"></label>
-                        <textarea asp-for="Price"></textarea>
+                        <input name="Price" asp-for="Price">
                         </div>
             <span asp-validation-for="Price" class="text-danger"></span>
         
     
     <div class="input-group">
             <label asp-for="Content"></label>
-            <textarea asp-for="Content"></textarea>
+            <textarea name="Content" asp-for="Content"></textarea>
     </div>
     <span asp-validation-for="Content" class="text-danger"></span>
-        
+    
     <input type="submit" value="Update" style="width: 100%; margin-top: 50px" />
 </form>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ASP.Server.Database;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,7 @@ using ASP.Server.Models;
 using ASP.Server.ViewModels;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using NSwag.Annotations;
 
 namespace ASP.Server.Controllers
@@ -50,7 +52,7 @@ namespace ASP.Server.Controllers
             return RedirectToAction("List");
         }
         
-        [HttpGet("/update/{id}")]
+        [HttpGet("/Book/update/{id}")]
         [OpenApiIgnore]
         public ActionResult Update(int id)
         {
@@ -67,26 +69,48 @@ namespace ASP.Server.Controllers
             return View(bookToUpdate);
         }
         
-        public ActionResult Update1(Book updatedBook)
+        public ActionResult Update1(Update1BookViewModel updateBook, IFormCollection form)
         {
             if (!ModelState.IsValid)
             {
                 // Si le modèle n'est pas valide, retourner le formulaire avec les erreurs de validation
                 return NotFound(); //View("Update", updatedBook);
             }
+            
+            var id = int.Parse(form["Id"]);
+            var name = form["Name"].ToString();
+            var author = form["Author"].ToString();
+            var genres =  form["Genres"].ToString().Split(',');
+            var price = float.Parse(form["Price"]);
+            var content = form["Content"].ToString();
 
-            var existingBook = libraryDbContext.Books.Include(b => b.Author).SingleOrDefault(b => b.Id == updatedBook.Id);
-            if (existingBook == null)
+            var book = libraryDbContext.Books.Include(b => b.Author.Books).Include(b => b.Genres).SingleOrDefault(b => b.Id == id);
+            book.Name = name;
+            book.Price = price;
+            book.Content = content;
+
+            if (author != book.Author.Name)
             {
-                // Si le livre à mettre à jour n'existe pas, retourner une réponse NotFound
-                return NotFound();
+                var oldAuthor = book.Author;
+                var authorQuery = libraryDbContext.Author.Include(a => a.Books).Where(a => a.Name == author);
+                if (authorQuery.Any()) // if exist
+                {
+                    book.Author = authorQuery.FirstOrDefault(a => a.Name == author);
+                }
+                else // create entity
+                {
+                    libraryDbContext.Author.Add(new Author() { Name = author, Books = [book] });
+                }
+                oldAuthor.Books = oldAuthor.Books.Where(b => b.Name != name);
+                Console.WriteLine($"DEBUG : new {book.Author.Name} old {oldAuthor.Name}");
             }
 
-            // Mettre à jour les propriétés du livre existant avec les nouvelles valeurs
-            existingBook.Name = updatedBook.Name;
-            existingBook.Content = updatedBook.Content; // Update content here
-            //existingBook.Genres = libraryDbContext.Genres.ToList();
-            existingBook.Author = updatedBook.Author;
+            var genresQuery = libraryDbContext.Genre.Include(g => g.Books);
+            if (genresQuery.Any()) // if exist
+            {
+                var newGenreList = genresQuery.Where(g => genres.Contains($"{g.Id}")).ToList();
+                book.Genres = newGenreList;
+            }
 
             libraryDbContext.SaveChanges();
 

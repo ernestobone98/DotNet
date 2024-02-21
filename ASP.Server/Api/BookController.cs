@@ -72,6 +72,8 @@ namespace ASP.Server.Api
             // Exemple avec AutoMapper
             // return mapper.Map<List<BookDto>>(libraryDbContext.Books.I);
         }
+        
+        
     }
 }
 

@@ -69,7 +69,7 @@ namespace ASP.Server.Controllers
             return View(bookToUpdate);
         }
         
-        public ActionResult Update1(Update1BookViewModel updateBook, IFormCollection form)
+        public ActionResult Update1(Update1BookViewModel updateBook)
         {
             if (!ModelState.IsValid)
             {
@@ -77,12 +77,15 @@ namespace ASP.Server.Controllers
                 return NotFound(); //View("Update", updatedBook);
             }
             
-            var id = int.Parse(form["Id"]);
-            var name = form["Name"].ToString();
-            var author = form["Author"].ToString();
-            var genres =  form["Genres"].ToString().Split(',');
-            var price = float.Parse(form["Price"]);
-            var content = form["Content"].ToString();
+            Console.WriteLine("GONNA WRITE:");
+            Console.WriteLine($"\n\n{updateBook.Id}, {updateBook.Name}, {updateBook.Genres}, {updateBook.Price}, {updateBook.Content}");
+
+            var id = updateBook.Id;
+            var name = updateBook.Name;
+            var author = updateBook.Author;
+            var genres = updateBook.Genres;//form["Genres"].ToString().Split(',');
+            var price = updateBook.Price;
+            var content = updateBook.Content;
 
             var book = libraryDbContext.Books.Include(b => b.Author.Books).Include(b => b.Genres).SingleOrDefault(b => b.Id == id);
             book.Name = name;
@@ -108,7 +111,7 @@ namespace ASP.Server.Controllers
             var genresQuery = libraryDbContext.Genre.Include(g => g.Books);
             if (genresQuery.Any()) // if exist
             {
-                var newGenreList = genresQuery.Where(g => genres.Contains($"{g.Id}")).ToList();
+                var newGenreList = genresQuery.Where(g => genres.Contains(g.Id)).ToList();
                 book.Genres = newGenreList;
             }
 

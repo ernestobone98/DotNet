@@ -8,7 +8,7 @@ namespace ASP.Server.ViewModels
     public class Update1BookViewModel
     {
         [Required]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
         
         [Required]
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace ASP.Server.ViewModels
 
         // Liste des genres sélectionnés par l'utilisateur
         [Required(ErrorMessage = "You need at least 1 genre"), MinLength(1)]
-        public IEnumerable<int> Genres { get; set; }
+        public List<int> Genres { get; set; }
 
         [Required]
         public string Author { get; set; }

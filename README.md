@@ -99,7 +99,7 @@ Un utilisateur doit pouvoir :
 - [x] Consulter la liste de tous les livres
 - Consulter la liste de tous les genres
 - Faire une interface pour ajouter de nouveaux genres 
-- Modifier un livre existant
+- [x] Modifier un livre existant
 
 Options :
 - [x] Remplacer le champs autheur (de type string) de la classe livre par une laison vers une classe Autheur

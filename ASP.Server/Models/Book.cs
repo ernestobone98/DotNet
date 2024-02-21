@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ASP.Server.Controllers;
 
 
 namespace ASP.Server.Models
@@ -19,8 +20,13 @@ namespace ASP.Server.Models
         public string Author { get; set; }
         public float Price { get; set; }
         public string Content { get; set; }
-        [Required] public IEnumerable<Genre> Genres { get; set; }
+        [Required] 
+        public List<Genre> Genres { get; set; }
 
+        // public Book()
+        // {
+        //     Genres = new List<Genre>();
+        // }
 
     }
 }

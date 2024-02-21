@@ -19,7 +19,11 @@ namespace ASP.Server.Models
 
         public IEnumerable<Book> Books { get; set; }
 
-        public Genre() { }
+        public Genre()
+        {
+            Books = new List<Book>();
+            
+        }
     }
 
 }

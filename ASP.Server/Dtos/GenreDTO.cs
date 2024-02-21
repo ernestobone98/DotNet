@@ -7,6 +7,6 @@ namespace ASP.Server.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<BookDto> Books { get; set; }
+        //public List<BookPartialDTO> Books { get; set; }
     }
 }

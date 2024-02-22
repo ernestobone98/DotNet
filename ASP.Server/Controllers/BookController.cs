@@ -27,19 +27,12 @@ namespace ASP.Server.Controllers
             return View(ListBooks);
         }
 
-        public ActionResult<CreateBookViewModel> Create(CreateBookViewModel book)
+        public ActionResult<CreateBookViewModel> Create(CreateBookViewModel viewModel)
         {
-            // Le IsValid est True uniquement si tous les champs de CreateBookModel marqués Required sont remplis
-            if (ModelState.IsValid)
-            {
-                // Completer la création du livre avec toute les information nécéssaire que vous aurez ajoutez, et metter la liste des gener récupéré de la base aussi
-                libraryDbContext.Add(new Book() {  });
-                libraryDbContext.SaveChanges();
-            }
-
-            // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
-            return View(new CreateBookViewModel() { AllGenres = libraryDbContext.Genre});
+            
+            return View(viewModel);
         }
+        
         
         [HttpPost("/delete/{id}")]
         [OpenApiIgnore]

@@ -45,7 +45,9 @@ namespace ASP.Server
             ASP_Server.UseStaticFiles();
             ASP_Server.UseRouting();
             ASP_Server.UseAuthorization();
-            ASP_Server.UseOpenApi();
+            ASP_Server.UseOpenApi(config =>
+            {
+            });
             ASP_Server.UseSwaggerUi();
             ASP_Server.UseEndpoints(endpoints =>
             {

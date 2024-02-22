@@ -9,10 +9,18 @@
     <h1>Liste des Genres:</h1>
     <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
     <p>Nombre de genres: @Model.Count()</p>
+	<!--Add button Add-->
+	<form method="post" action="/Genre/Create">
+		<button type="submit">Ajouter</button>
+	</form>
     @foreach (var genre in Model)
 	{
 		<div class="genre">
 			<h2>@genre.Name</h2>
+			<!--Add a delete button-->
+			<form method="post" action="/delete/@genre.Id" >
+				<button type="submit">Supprimer</button>
+			</form>
 		</div>
 	}
 </div>

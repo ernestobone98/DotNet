@@ -1,0 +1,82 @@
+﻿@using ASP.Server.Controllers
+@using ASP.Server.ViewModels
+@model CreateGenreViewModel
+@{
+    ViewData["Title"] = "Add a genre";
+}
+<style>
+    .input-group {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    input, textarea, select {
+        flex-basis: 85%;
+    }
+
+    label {
+        flex-basis: 10%;
+    }
+</style>
+
+<!-- Voici une facon de faire, mais ce n'est pas la seul, a vous de jouer ! -->
+<form asp-controller="Genre" asp-action="Create">
+    <div class="input-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <label asp-for="Books"></label>
+        <input type="text" id="bookFilter" placeholder="Type to filter books" />
+        <!-- Display matching books in a dropdown -->
+        <select asp-for="Books" id="matchingBooks" multiple style="flex-basis: 85%; display: none;">
+            <!-- Options will be added dynamically with JavaScript -->
+        </select>
+    </div>
+
+    <input type="submit" value="Add" style="width: 100%; margin-top: 50px" />
+</form>
+
+<script>
+    // Add JavaScript to handle book filtering
+    document.getElementById("bookFilter").addEventListener("input", function () {
+        // Get the input value
+        var filterValue = this.value.toLowerCase();
+
+        // Get the select element
+        var matchingBooksSelect = document.getElementById("matchingBooks");
+
+        // Check if filterValue is null or empty
+        if (!filterValue) {
+            // Hide the select element
+            matchingBooksSelect.style.display = "none";
+            return;
+        } else {
+            // Show the select element
+            matchingBooksSelect.style.display = "block";
+        }
+
+        // Clear existing options
+        matchingBooksSelect.innerHTML = "";
+
+        // Add an empty default option
+        var defaultOption = document.createElement("option");
+        defaultOption.text = "Select Books";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        matchingBooksSelect.appendChild(defaultOption);
+
+        // Display matching books in the dropdown
+        fetch(`/Genre/GetMatchingBooks?filterValue=${filterValue}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(book => {
+                    var option = document.createElement("option");
+                    option.value = book.id; // Assuming there is an "id" property in your Book model
+                    option.text = book.name; // Assuming there is a "name" property in your Book model
+                    matchingBooksSelect.appendChild(option);
+                });
+            });
+    });
+</script>
+

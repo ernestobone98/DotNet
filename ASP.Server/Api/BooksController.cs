@@ -13,14 +13,14 @@ using AutoMapper.QueryableExtensions;
 
 namespace ASP.Server.Api
 {
-    [Route("/api/[controller]")]
+    [Route("/api/book")]
     [ApiController]
-    public class BookPartialController : ControllerBase
+    public class BooksController : ControllerBase
     {
         private readonly LibraryDbContext _libraryDbContext;
         private readonly IMapper _mapper;
 
-        public BookPartialController(LibraryDbContext libraryDbContext, IMapper mapper)
+        public BooksController(LibraryDbContext libraryDbContext, IMapper mapper)
         {
             _libraryDbContext = libraryDbContext;
             _mapper = mapper;

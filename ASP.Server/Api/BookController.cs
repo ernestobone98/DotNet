@@ -14,7 +14,7 @@ using AutoMapper.QueryableExtensions;
 namespace ASP.Server.Api
 {
 
-    [Route("/api/[controller]/[action]")]
+    [Route("/api/book/{id}")]
     [ApiController]
     public class BookController(LibraryDbContext libraryDbContext, IMapper mapper) : ControllerBase
     {
@@ -61,18 +61,23 @@ namespace ASP.Server.Api
         //      this.mapper.Map<List<ItemDto>>(my_array);
 
         // Je vous montre comment faire la 1er, a vous de la compléter et de faire les autres !
-        public ActionResult<IEnumerable<BookDto>> GetBooks()
-        {
-            //libraryDbContext.Books.Include(x => x.Genres).Include(x => x.Author).Select(b => b)ToList();
-            var books = libraryDbContext.Books.Include(b => b.Author).Include(b => b.Genres);
-            return mapper.Map<List<BookDto>>(books);
-            
-            // Exemple sans dependence externe
-            // return libraryDbContext.Books.Select(b => new BookDto { Id = b.Id });
-            // Exemple avec AutoMapper
-            // return mapper.Map<List<BookDto>>(libraryDbContext.Books.I);
-        }
         
+        
+        public ActionResult<BookDto> GetBook(int id)
+        {
+            var book = libraryDbContext.Books
+                .Include(b => b.Author)
+                .Include(b => b.Genres)
+                .FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                return NotFound(); // Retourne une réponse 404 si le livre n'est pas trouvé
+            }
+
+            var bookDto = mapper.Map<BookDto>(book);
+            return bookDto;
+        }
         
     }
 }

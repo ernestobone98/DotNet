@@ -126,7 +126,7 @@ Une ébauche de ce qui est attendu ce trouve dans le fichier ASP.Server/Api/Book
 Cette api doit permettre de :
 - [x] Récupérer un livre avec son contenu
 - [x] Lister les genres disponibles
-- Lister les livres (sans le contenu)
+- [x] Lister les livres (sans le contenu)
 
 Options:
 - Utiliser un plugin pour changer le format de sortie

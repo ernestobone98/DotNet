@@ -9,12 +9,17 @@ using System.Linq;
 namespace ASP.Server
 {
     public class MappingProfile : Profile
-    {
+    { 
         public MappingProfile()
         {
             // Rajouter autant de ligne ici que vous avez de mapping Model <-> DTO
             // https://docs.automapper.org/en/latest/
-            CreateMap<Book, BookDto>();
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author));
+            CreateMap<Book, BookPartialDTO>();
+            CreateMap<Genre, GenreDTO>();
+            CreateMap<Genre, GenrePartialDTO>();
+            CreateMap<Author, AuthorPartialDTO>();
         }
     }
 }

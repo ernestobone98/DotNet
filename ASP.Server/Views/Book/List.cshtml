@@ -9,12 +9,56 @@
     <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
     @foreach (var book in Model)
     {
-        <div class="book">
-			<h2>@book.Name</h2>
-			<p>@book.Author.Name</p>
-			<p>@book.Price</p>
-			
-		</div>
+        <div class="d-flex flex-row my-2 bg-light ps-4 pt-2">
+            <div>
+                <div class="book ">
+                    <h2>@book.Name</h2>
+                    <div class="d-flex flex-row ">
+                        <h3>@book.Author.Name</h3>
+                        <h3> - </h3>
+                        <h3>[@foreach (var genre in book.Genres) 
+                             {
+                                 <span>@genre.Name, </span>
+                             }]</h3>
+                    </div>
+                </div>	
+                <p>@book.Price</p>
+                <div class="spoiler">
+                    <button class="spoiler-btn">Afficher le contenu</button>
+                    <div class="spoiler-content" style="display: none;">
+                        <p>@book.Content</p>
+                    </div>
+                </div>
+                <!-- Anchor tag to navigate to the update page -->
+                <a href="/Book/update/@book.Id">Update</a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                <form method="post" action="/delete/@book.Id">
+                    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                        <button type="submit" class="p-3 text-white rounded bg-danger">DELETE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     }
 </div>
 
+<script>
+    // Sélectionnez tous les boutons de spoiler
+    var spoilerBtns = document.querySelectorAll('.spoiler-btn');
+
+    // Ajoutez un gestionnaire d'événements à chaque bouton
+    spoilerBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            // Sélectionnez la div spoiler-content associée à ce bouton
+            var spoilerContent = this.nextElementSibling;
+
+            // Toggle l'affichage du contenu
+            if (spoilerContent.style.display === 'none') {
+                spoilerContent.style.display = 'block';
+            } else {
+                spoilerContent.style.display = 'none';
+            }
+        });
+    });
+</script>

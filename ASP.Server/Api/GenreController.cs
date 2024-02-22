@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,9 +14,9 @@ using AutoMapper.QueryableExtensions;
 namespace ASP.Server.Api
 {
 
-    [Route("/api/book/{id}")]
+    [Route("/api/[controller]")]
     [ApiController]
-    public class BookController(LibraryDbContext libraryDbContext, IMapper mapper) : ControllerBase
+    public class GenreController(LibraryDbContext libraryDbContext, IMapper mapper) : ControllerBase
     {
         private readonly LibraryDbContext libraryDbContext = libraryDbContext;
         private readonly IMapper mapper = mapper;
@@ -61,24 +61,17 @@ namespace ASP.Server.Api
         //      this.mapper.Map<List<ItemDto>>(my_array);
 
         // Je vous montre comment faire la 1er, a vous de la compléter et de faire les autres !
-        
-        
-        public ActionResult<BookDto> GetBook(int id)
+        public ActionResult<IEnumerable<GenreDTO>> GetGenres()
         {
-            var book = libraryDbContext.Books
-                .Include(b => b.Author)
-                .Include(b => b.Genres)
-                .FirstOrDefault(b => b.Id == id);
-
-            if (book == null)
-            {
-                return NotFound(); // Retourne une réponse 404 si le livre n'est pas trouvé
-            }
-
-            var bookDto = mapper.Map<BookDto>(book);
-            return bookDto;
+            //libraryDbContext.Books.Include(x => x.Genres).Include(x => x.Author).Select(b => b)ToList();
+            var genres = libraryDbContext.Genre;
+            return mapper.Map<List<GenreDTO>>(genres);
+            
+            // Exemple sans dependence externe
+            // return libraryDbContext.Books.Select(b => new BookDto { Id = b.Id });
+            // Exemple avec AutoMapper
+            // return mapper.Map<List<BookDto>>(libraryDbContext.Books.I);
         }
-        
     }
 }
 

@@ -40,7 +40,6 @@ namespace ASP.Server.Controllers
                 libraryDbContext.SaveChanges();
                 return RedirectToAction("List");
             }
-
             return View(new CreateGenreViewModel()
             {
                 AllBooks = libraryDbContext.Books
@@ -70,15 +69,15 @@ namespace ASP.Server.Controllers
         [OpenApiIgnore]
         public ActionResult<Genre> Delete(int id)
         {
-			Genre genre = libraryDbContext.Genre.Find(id);
-			if (genre == null)
-            {
-				return NotFound();
-			}
+          Genre genre = libraryDbContext.Genre.Find(id);
+          if (genre == null)
+          {
+            return NotFound();
+          }
 
-			libraryDbContext.Genre.Remove(genre);
-			libraryDbContext.SaveChanges();
-			return RedirectToAction("List");
-		}
-    }
+          libraryDbContext.Genre.Remove(genre);
+          libraryDbContext.SaveChanges();
+          return RedirectToAction("List");
+        }
+      }
 }

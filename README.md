@@ -95,16 +95,16 @@ Il est nécessaire pour ces fonctionnalités de mettre à disposition de l’uti
 Un utilisateur doit pouvoir :
 
 - ajouter des livres dans la bibliothèque
-- supprimer des livres de la bibliothèque
-- Consulter la liste de tous les livres
+- [x] supprimer des livres de la bibliothèque
+- [x] Consulter la liste de tous les livres
 - Consulter la liste de tous les genres
 - Faire une interface pour ajouter de nouveaux genres 
-- Modifier un livre existant
+- [x] Modifier un livre existant
 
 Options :
-- Remplacer le champs autheur (de type string) de la classe livre par une laison vers une classe Autheur
-  - On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vraix)
-  - La class autheur à besoin d'au minimum du nom de l'autheur
+- [x] Remplacer le champs autheur (de type string) de la classe livre par une laison vers une classe Autheur
+  - [x] On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vraix)
+  - [x] La class autheur à besoin d'au minimum du nom de l'autheur
 - Afficher des filtres dans la liste des livres pour filtrer par autheurs / genres
 - Une page affichants les statistiques sur :
   - le nombre de libres total disponible
@@ -124,9 +124,9 @@ Une api REST doit être mis à disposition pour permettre à des clients externe
 Une ébauche de ce qui est attendu ce trouve dans le fichier ASP.Server/Api/BookController.cs
 
 Cette api doit permettre de :
-- Récupérer un livre avec son contenu
-- Lister les genres disponibles
-- Lister les livres (sans le contenu)
+- [x] Récupérer un livre avec son contenu
+- [x] Lister les genres disponibles
+- [x] Lister les livres (sans le contenu)
 
 Options:
 - Utiliser un plugin pour changer le format de sortie

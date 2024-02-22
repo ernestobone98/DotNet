@@ -63,7 +63,7 @@ namespace ASP.Server.Controllers
             return View(viewModel);
         }
         
-        [HttpPost("/delete/{id}")]
+        [HttpPost("/Book/delete/{id}")]
         [OpenApiIgnore]
         public ActionResult Delete(int id)
         {
@@ -99,9 +99,6 @@ namespace ASP.Server.Controllers
                 return NotFound(); //View("Update", updatedBook);
             }
             
-            Console.WriteLine("GONNA WRITE:");
-            Console.WriteLine($"\n\n{updateBook.Id}, {updateBook.Name}, {updateBook.Genres}, {updateBook.Price}, {updateBook.Content}");
-
             var id = updateBook.Id;
             var name = updateBook.Name;
             var author = updateBook.Author;

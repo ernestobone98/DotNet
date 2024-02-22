@@ -10,13 +10,15 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             x:DataType="vm:ListBooks">
+             x:DataType="vm:ListBooks"
+             x:Name="ListBooksPage">
     <ContentPage.BindingContext>
         <vm:ListBooks />
     </ContentPage.BindingContext>
-    <ScrollView>
+    
+    <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <VerticalStackLayout Padding="30,0"
-                             Spacing="25">
+                             Spacing="50">
 
             <!-- 
             A vous de créer la liste avec le bon binding. Une <ListBox> fera l'affaire 
@@ -35,30 +37,31 @@
             https://stackoverflow.com/questions/76681900/binding-contextactions-menuitem-with-communitytoolkit-mvvm-in-maui
             
             -->
-
-            <!-- Supprimer tous ta parti suivante qui est juste la pour vous monter ce qu'on peut faire -->
-            <Image Source="dotnet_bot.png"
-                   HeightRequest="185"
-                   Aspect="AspectFit"
-                   SemanticProperties.Description="dot net bot in a race car number eight" />
-
-            <Label Text="Hello, World!"
+            <Label Text="List of books"
                    Style="{StaticResource Headline}"
                    SemanticProperties.HeadingLevel="Level1" />
+                <ListView ItemsSource="{Binding Books}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetBooksCommand}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Book">
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Padding="10" BackgroundColor="LightGray" Spacing="10">
+                                    <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                                    <Frame BackgroundColor="SteelBlue" Padding="8,5" CornerRadius="5">
+                                        <Button Text="Détails" BackgroundColor="SteelBlue"
+                                                Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference Name=ListBooksPage}}"
+                                                CommandParameter="{Binding .}"
+                                                TextColor="White"/>
+                                    </Frame>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            
+            
+            
 
-            <Label Text="Welcome to &#10;.NET Multi-platform App UI"
-                   Style="{StaticResource SubHeadline}"
-                   SemanticProperties.HeadingLevel="Level2"
-                   SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button x:Name="CounterBtn"
-                    Text="{Binding Count}"
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Command="{Binding CounterClickedCommand}"
-                    HorizontalOptions="Fill">
-            </Button>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
 

@@ -14,13 +14,9 @@ using System.Windows.Input;
 
 namespace MAUI.Reader.Model
 {
-    // A vous de completer ce qu'est un Livre !!
-    // /!\ ATTENTION ! Si vous récupéré les livres depuis votre serveur, cette classe ne sert plus a rien !
-    public class Book
+    public class BookResult
     {
-        public string Name { get; set; }
-        //public string Author { get; set; }
-        public float Price { get; set; }
-        //public string Genres { get; set; }
+        public string Code { get; set; }
+        public Book Book { get; set; }
     }
 }

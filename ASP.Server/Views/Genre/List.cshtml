@@ -5,24 +5,88 @@
     ViewData["Title"] = "Liste Genre";
 }
 
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+
+        height: 100vh;
+    }
+
+    .listeGenres {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        text-align: center;
+    }
+
+    .genre {
+        margin-top: 20px;
+    }
+
+    .genre h2 {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .genre button {
+        background-color:#ffff;
+        color: #e74c3c;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .genre button:hover {
+        color: #c0392b;
+    }
+
+    .add-button {
+        margin-top: 20px;
+    }
+
+    .add-button button {
+        background-color: #2ecc71;
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .add-button button:hover {
+        background-color: #27ae60;
+    }
+
+    .container {
+		display: flex;
+		justify-content: center;
+	}
+</style>
+
 <div class="listeGenres">
     <h1>Liste des Genres:</h1>
-    <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
     <p>Nombre de genres: @Model.Count()</p>
-	<!--Add button Add-->
-	<form method="post" action="/Genre/Create">
-		<button type="submit">Ajouter</button>
-	</form>
+
+    <div class="add-button">
+        <form method="post" action="/Genre/Create">
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+
     @foreach (var genre in Model)
-	{
-		<div class="genre">
-			<h2>@genre.Name</h2>
-			<!--Add a delete button-->
-			<form method="post" action="/delete/@genre.Id" >
-				<button type="submit">Supprimer</button>
-			</form>
-		</div>
-	}
+    {
+        <div class="genre">
+            <h2>@genre.Name</h2>
+
+            <form method="post" action="/Genre/Delete/@genre.Id">
+                <button type="submit">Supprimer</button>
+            </form>
+        </div>
+    }
 </div>
-
-

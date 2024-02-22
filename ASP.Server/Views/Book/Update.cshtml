@@ -4,76 +4,119 @@
 @{
     ViewData["Title"] = "Update Book";
 }
+
 <style>
-.input-group {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-input, textarea, select {
-    flex-basis: 85%;
-}
-label {
-    flex-basis: 10%;
-}
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .container
+    {
+		display:flex;
+		justify-content: center;
+	}
+
+    form {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+    }
+
+    .input-group {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    input, textarea, select {
+        flex-basis: 85%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    label {
+        flex-basis: 10%;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
 </style>
 
-<!-- Voici une façon de faire, mais ce n'est pas la seule, à vous de jouer ! -->
 <form asp-controller="Book" asp-action="Update1">
     <div class="input-group">
-        <label asp-for="Id"></label>
+        <label asp-for="Id">Book ID</label>
         <input name="Id" asp-for="Id" readonly />
     </div>
     <span asp-validation-for="Id" class="text-danger"></span>
+
     <div class="input-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name">Book Name</label>
         <input name="Name" asp-for="Name" />
     </div>
     <span asp-validation-for="Name" class="text-danger"></span>
-    
-    <div class="input-group">
-            <label asp-for="Author"></label>
-            <input name="Author" asp-for="Author.Name" />
-        </div>
-        <span asp-validation-for="Author" class="text-danger"></span>
-    
-    <div class="input-group">
-                    <label asp-for="Genres"></label>
-                    <!--Si la page rend une erreur à cette ligne, c'est que vous n'avez pas envoyé la liste des genres dans le Controller !!! ! -->
-                    <select asp-for="Genres">
-                        @if (Model.Genres != null)
-                        {
-                            @foreach (var genre in Model.AllGenres)
-                            {
-                                if (Model.Genres.Any((g) => g.Id == genre.Id))
-                                {
-                                    <option value="@genre.Id" selected>@genre.Name</option>
-                                }
-                                else
-                                {
-                                    Console.WriteLine(Model.Genres.Any((g) => g.Id == genre.Id));
-                                    <option value="@genre.Id"> @genre.Name </option>
-                                }
 
-                            }
-                        }
-                    </select>
-                </div>
+    <div class="input-group">
+        <label asp-for="Author">Author</label>
+        <input name="Author" asp-for="Author.Name" />
+    </div>
+    <span asp-validation-for="Author" class="text-danger"></span>
+
+    <div class="input-group">
+        <label asp-for="Genres">Select Genres</label>
+        <select asp-for="Genres">
+            @if (Model.Genres != null)
+            {
+                @foreach (var genre in Model.AllGenres)
+                {
+                    if (Model.Genres.Any((g) => g.Id == genre.Id))
+                    {
+                        <option value="@genre.Id" selected>@genre.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@genre.Id"> @genre.Name </option>
+                    }
+                }
+            }
+        </select>
+    </div>
     <span asp-validation-for="Genres" class="text-danger"></span>
-        
-            
+
     <div class="input-group">
-                        <label asp-for="Price"></label>
-                        <input name="Price" asp-for="Price">
-                        </div>
-            <span asp-validation-for="Price" class="text-danger"></span>
-    
+        <label asp-for="Price">Price</label>
+        <input name="Price" asp-for="Price">
+    </div>
+    <span asp-validation-for="Price" class="text-danger"></span>
+
     <div class="input-group">
-            <label asp-for="Content"></label>
-            <textarea name="Content" asp-for="Content"></textarea>
+        <label asp-for="Content">Content</label>
+        <textarea name="Content" asp-for="Content"></textarea>
     </div>
     <span asp-validation-for="Content" class="text-danger"></span>
-    
-    <input type="submit" value="Update" style="width: 100%; margin-top: 50px" />
+
+    <input type="submit" value="Update" />
 </form>

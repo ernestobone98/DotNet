@@ -1,10 +1,39 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utfcolorname="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APP</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100%; 
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            overflow-y: auto;
+        }
+
+        footer {
+            position: sticky;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -26,6 +55,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Create">Add new book</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="Create">Add new genre</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav float-right">
                         <li class="nav-item float-right">
@@ -42,11 +74,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class=" footer text-muted">
+        <div class="">
             &copy; 2021 - APP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

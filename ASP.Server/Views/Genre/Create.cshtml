@@ -4,37 +4,75 @@
 @{
     ViewData["Title"] = "Add a genre";
 }
+
 <style>
-    .input-group {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
     }
 
-    input, textarea, select {
-        flex-basis: 85%;
+    form {
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
     }
 
     label {
-        flex-basis: 10%;
+        margin-bottom: 8px;
+        font-weight: bold;
     }
+
+    .container{
+        display:flex;
+        justify-content: center;
+    }
+
+    input, select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
 </style>
 
 <!-- Voici une facon de faire, mais ce n'est pas la seul, a vous de jouer ! -->
 <form asp-controller="Genre" asp-action="Create">
     <div class="input-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name">Genre Name</label>
         <input asp-for="Name" />
-        <label asp-for="Books"></label>
+    </div>
+
+    <div class="input-group">
+        <label asp-for="Books">Select Books</label>
         <input type="text" id="bookFilter" placeholder="Type to filter books" />
         <!-- Display matching books in a dropdown -->
-        <select asp-for="Books" id="matchingBooks" multiple style="flex-basis: 85%; display: none;">
+        <select asp-for="Books" id="matchingBooks" multiple style="display: none;">
             <!-- Options will be added dynamically with JavaScript -->
         </select>
     </div>
 
-    <input type="submit" value="Add" style="width: 100%; margin-top: 50px" />
+    <input type="submit" value="Add" />
 </form>
 
 <script>
@@ -72,11 +110,10 @@
             .then(data => {
                 data.forEach(book => {
                     var option = document.createElement("option");
-                    option.value = book.id; // Assuming there is an "id" property in your Book model
-                    option.text = book.name; // Assuming there is a "name" property in your Book model
+                    option.value = book.id; 
+                    option.text = book.name;
                     matchingBooksSelect.appendChild(option);
                 });
             });
     });
 </script>
-

@@ -27,18 +27,40 @@ namespace ASP.Server.Controllers
             return View(ListBooks);
         }
 
-        public ActionResult<CreateBookViewModel> Create(CreateBookViewModel book)
-        {
-            // Le IsValid est True uniquement si tous les champs de CreateBookModel marqués Required sont remplis
+        public ActionResult<CreateBookViewModel> Create(CreateBookViewModel viewModel)
+        { // Le IsValid est True uniquement si tous les champs de CreateBookModel marqués Required sont remplis
             if (ModelState.IsValid)
             {
-                // Completer la création du livre avec toute les information nécéssaire que vous aurez ajoutez, et metter la liste des gener récupéré de la base aussi
-                libraryDbContext.Add(new Book() {  });
+                var author = libraryDbContext.Author.Include(a => a.Books).Where(a => a.Name == viewModel.Author);
+                Author newAuthor;
+                if (author.Any()) //if exist
+                {
+                    newAuthor = author.FirstOrDefault();
+                }
+                else //creation of a new autor
+                {
+                    libraryDbContext.Add(new Author() { Name = viewModel.Author });
+                    libraryDbContext.SaveChanges();
+                    newAuthor = author.FirstOrDefault();
+                }
+
+                var book = new Book()
+                {
+                    Name = viewModel.Name,
+                    Author = newAuthor,
+                    Price = viewModel.Price,
+                    Content = viewModel.Content,
+                    Genres = viewModel.Genres.Select(id => libraryDbContext.Genre.Find(id)).ToList()
+                };
+                libraryDbContext.Add(book);
                 libraryDbContext.SaveChanges();
+                newAuthor.Books = newAuthor.Books.Append(book);
+                return RedirectToAction(nameof(List));
             }
 
             // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
-            return View(new CreateBookViewModel() { AllGenres = libraryDbContext.Genre});
+            viewModel.AllGenres = libraryDbContext.Genre;
+            return View(viewModel);
         }
         
         [HttpPost("/delete/{id}")]

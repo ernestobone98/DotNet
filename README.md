@@ -124,9 +124,9 @@ Une api REST doit être mis à disposition pour permettre à des clients externe
 Une ébauche de ce qui est attendu ce trouve dans le fichier ASP.Server/Api/BookController.cs
 
 Cette api doit permettre de :
-- Récupérer un livre avec son contenu
-- Lister les genres disponibles
-- Lister les livres (sans le contenu)
+- [x] Récupérer un livre avec son contenu
+- [x] Lister les genres disponibles
+- [x] Lister les livres (sans le contenu)
 
 Options:
 - Utiliser un plugin pour changer le format de sortie

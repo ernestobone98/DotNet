@@ -31,7 +31,6 @@ namespace ASP.Server.Controllers
                 libraryDbContext.Add(new Genre() {  });
                 libraryDbContext.SaveChanges();
             }
-
             return View(new CreateGenreViewModel());
         }
     }

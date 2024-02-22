@@ -17,10 +17,10 @@ namespace ASP.Server.ViewModels
         // Liste des genres séléctionné par l'utilisateur
         [Required(ErrorMessage = "You need at least 1 genre"), MinLength(1)]
         public IEnumerable<int> Genres { get; set; }
-
+        
         [Required]
         public string Author { get; set; }
-
+        
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage="Price can't be less than 0")]
         public float Price { get; set; }

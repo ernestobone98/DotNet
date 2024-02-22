@@ -19,7 +19,7 @@ namespace ASP.Server.Models
         public Author Author { get; set; }
         public float Price { get; set; }
         public string Content { get; set; }
-        [Required] public IEnumerable<Genre> Genres { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
 
 
     }

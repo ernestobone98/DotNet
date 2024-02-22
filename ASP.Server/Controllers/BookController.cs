@@ -77,9 +77,6 @@ namespace ASP.Server.Controllers
                 return NotFound(); //View("Update", updatedBook);
             }
             
-            Console.WriteLine("GONNA WRITE:");
-            Console.WriteLine($"\n\n{updateBook.Id}, {updateBook.Name}, {updateBook.Genres}, {updateBook.Price}, {updateBook.Content}");
-
             var id = updateBook.Id;
             var name = updateBook.Name;
             var author = updateBook.Author;
@@ -99,13 +96,14 @@ namespace ASP.Server.Controllers
                 if (authorQuery.Any()) // if exist
                 {
                     book.Author = authorQuery.FirstOrDefault(a => a.Name == author);
+                    book.Author.Books = book.Author.Books.Append(book);
                 }
                 else // create entity
                 {
                     libraryDbContext.Author.Add(new Author() { Name = author, Books = [book] });
                 }
                 oldAuthor.Books = oldAuthor.Books.Where(b => b.Name != name);
-                Console.WriteLine($"DEBUG : new {book.Author.Name} old {oldAuthor.Name}");
+                libraryDbContext.SaveChanges();
             }
 
             var genresQuery = libraryDbContext.Genre.Include(g => g.Books);

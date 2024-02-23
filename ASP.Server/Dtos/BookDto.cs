@@ -12,7 +12,7 @@ namespace ASP.Server.Dtos
         public string Name { get; set; }
         public float Price { get; set; }
         public string Content { get; set; }
-        public AuthorPartialDTO Author { get; set; }
+        public List<AuthorPartialDTO> Authors { get; set; }
         public List<GenrePartialDTO> Genres { get; set; }
     }
 }

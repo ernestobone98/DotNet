@@ -15,7 +15,7 @@ namespace ASP.Server
             // Rajouter autant de ligne ici que vous avez de mapping Model <-> DTO
             // https://docs.automapper.org/en/latest/
             CreateMap<Book, BookDto>()
-                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author));
+                .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors));
             CreateMap<Book, BookPartialDTO>();
             CreateMap<Genre, GenreDTO>();
             CreateMap<Genre, GenrePartialDTO>();

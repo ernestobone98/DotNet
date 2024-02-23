@@ -22,47 +22,48 @@ namespace ASP.Server.Controllers
         public ActionResult<IEnumerable<Book>> List()
         {
             // récupérer les livres dans la base de donées pour qu'elle puisse être affiché
-            IEnumerable<Book> ListBooks = libraryDbContext.Books.Include(b => b.Author)
-                .Include(b => b.Genres);
-            return View(ListBooks);
+            IEnumerable<Book> listBooks = libraryDbContext.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .ToList();
+
+            return View(listBooks);
         }
 
         public ActionResult<CreateBookViewModel> Create(CreateBookViewModel viewModel)
-        { // Le IsValid est True uniquement si tous les champs de CreateBookModel marqués Required sont remplis
+        {
             if (ModelState.IsValid)
             {
-                var author = libraryDbContext.Author.Include(a => a.Books).Where(a => a.Name == viewModel.Author);
-                Author newAuthor;
-                if (author.Any()) //if exist
-                {
-                    newAuthor = author.FirstOrDefault();
-                }
-                else //creation of a new autor
-                {
-                    libraryDbContext.Add(new Author() { Name = viewModel.Author });
-                    libraryDbContext.SaveChanges();
-                    newAuthor = author.FirstOrDefault();
-                }
+                // Split the comma-separated string of authors into a list of authors
+                var authors = viewModel.Authors
+                    .Split(',')
+                    .Select(authorName => authorName.Trim())
+                    .ToList();
+
+                // Create a list of Author entities for the book
+                var authorEntities = authors.Select(authorName => new Author { Name = authorName }).ToList();
 
                 var book = new Book()
                 {
                     Name = viewModel.Name,
-                    Author = newAuthor,
+                    Authors = authorEntities,
                     Price = viewModel.Price,
                     Content = viewModel.Content,
                     Genres = viewModel.Genres.Select(id => libraryDbContext.Genre.Find(id)).ToList()
                 };
+
                 libraryDbContext.Add(book);
                 libraryDbContext.SaveChanges();
-                newAuthor.Books = newAuthor.Books.Append(book);
+
                 return RedirectToAction(nameof(List));
             }
 
-            // Il faut interoger la base pour récupérer tous les genres, pour que l'utilisateur puisse les slécétionné
+            // Interrogate the database to retrieve all genres for user selection
             viewModel.AllGenres = libraryDbContext.Genre;
             return View(viewModel);
         }
-        
+
+
         [HttpPost("/Book/delete/{id}")]
         [OpenApiIgnore]
         public ActionResult Delete(int id)
@@ -73,74 +74,84 @@ namespace ASP.Server.Controllers
             libraryDbContext.SaveChanges();
             return RedirectToAction("List");
         }
-        
+
         [HttpGet("/Book/update/{id}")]
         [OpenApiIgnore]
         public ActionResult Update(int id)
         {
-            var book = libraryDbContext.Books.Include(b => b.Genres).Include(b => b.Author).SingleOrDefault(b => b.Id == id);
+            var book = libraryDbContext.Books
+                .Include(b => b.Genres)
+                .Include(b => b.Authors)
+                .SingleOrDefault(b => b.Id == id);
+
             if (book == null) return NotFound();
-            var bookToUpdate = new UpdateBookViewModel();
-            bookToUpdate.Genres = book.Genres;
-            bookToUpdate.Author = book.Author;
-            bookToUpdate.Content = book.Content;
-            bookToUpdate.Name = book.Name;
-            bookToUpdate.Id = book.Id;
-            bookToUpdate.Price = book.Price;
-            bookToUpdate.AllGenres = libraryDbContext.Genre;
+
+            var bookToUpdate = new UpdateBookViewModel
+            {
+                Genres = book.Genres,
+                Authors = book.Authors.Select(a => a.Name),
+                Content = book.Content,
+                Name = book.Name,
+                Id = book.Id,
+                Price = book.Price,
+                AllGenres = libraryDbContext.Genre
+            };
+
             return View(bookToUpdate);
         }
-        
-        public ActionResult Update1(Update1BookViewModel updateBook)
+
+        public ActionResult Update1(int id, Update1BookViewModel updateBook)
         {
             if (!ModelState.IsValid)
             {
-                // Si le modèle n'est pas valide, retourner le formulaire avec les erreurs de validation
-                return NotFound(); //View("Update", updatedBook);
+                // If the model is not valid, return the form with validation errors
+                updateBook.AllGenres = libraryDbContext.Genre;
+                return View(updateBook);
             }
-            
-            var id = updateBook.Id;
+
             var name = updateBook.Name;
-            var author = updateBook.Author;
-            var genres = updateBook.Genres;//form["Genres"].ToString().Split(',');
+            var authors = updateBook.Authors?
+                .Split(',')
+                .Select(authorName => authorName.Trim())
+                .ToList()
+                .Select(authorName => new Author { Name = authorName }).ToList();
+
+            var genres = updateBook.Genres;
             var price = updateBook.Price;
             var content = updateBook.Content;
 
-            var book = libraryDbContext.Books.Include(b => b.Author.Books).Include(b => b.Genres).SingleOrDefault(b => b.Id == id);
+            var book = libraryDbContext.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .SingleOrDefault(b => b.Id == id);
+
             book.Name = name;
             book.Price = price;
             book.Content = content;
 
-            if (author != book.Author.Name)
+            if (authors != null)
             {
-                var oldAuthor = book.Author;
-                var authorQuery = libraryDbContext.Author.Include(a => a.Books).Where(a => a.Name == author);
-                if (authorQuery.Any()) // if exist
+                // Update or add new authors
+                book.Authors = authors.Select(author =>
                 {
-                    book.Author = authorQuery.FirstOrDefault(a => a.Name == author);
-                    book.Author.Books = book.Author.Books.Append(book);
-                }
-                else // create entity
-                {
-                    libraryDbContext.Author.Add(new Author() { Name = author, Books = [book] });
-                }
-                oldAuthor.Books = oldAuthor.Books.Where(b => b.Name != name);
-                libraryDbContext.SaveChanges();
+                    var existingAuthor = libraryDbContext.Author.FirstOrDefault(a => a.Name == author.Name);
+                    return existingAuthor ?? new Author { Name = author.Name };
+                }).ToList();
             }
 
-            var genresQuery = libraryDbContext.Genre.Include(g => g.Books);
-            if (genresQuery.Any()) // if exist
+            if (genres != null)
             {
-                var newGenreList = genresQuery.Where(g => genres.Contains(g.Id)).ToList();
-                book.Genres = newGenreList;
+                // Update genres
+                book.Genres = genres.Select(genreId => libraryDbContext.Genre.Find(genreId)).ToList();
             }
 
             libraryDbContext.SaveChanges();
 
-            // Rediriger vers l'action List pour afficher la liste mise à jour des livres
+            // Redirect to the List action to display the updated list of books
             return RedirectToAction("List");
         }
 
-        
+
+
     }
 }

@@ -19,7 +19,7 @@ namespace ASP.Server.ViewModels
         public IEnumerable<Genre> Genres { get; set; }
 
         [Required]
-        public Author Author { get; set; }
+        public IEnumerable<String> Authors { get; set; }
         
         public string Content { get; set; }
         

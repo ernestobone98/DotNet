@@ -29,7 +29,7 @@ namespace ASP.Server.Api
         [HttpGet]
         public ActionResult<IEnumerable<BookPartialDTO>> GetBooks([FromQuery] int offset = 0, [FromQuery] int limit = 10, [FromQuery] int? genre = null)
         {
-            IQueryable<Book> query = _libraryDbContext.Books.Include(b => b.Author).Include(b => b.Genres);
+            IQueryable<Book> query = _libraryDbContext.Books.Include(b => b.Authors).Include(b => b.Genres);
 
             if (genre.HasValue)
             {

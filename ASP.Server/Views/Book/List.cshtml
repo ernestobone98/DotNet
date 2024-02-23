@@ -92,11 +92,24 @@
             {
                 <tr>
                     <td>@book.Name</td>
-                    <td>@book.Author.Name</td>
+                    <td>
+                        @foreach (var author in book.Authors)
+						{
+							<span>@author.Name</span>
+                            @if (author != book.Authors.Last())
+							{
+								<span> - </span>
+							}
+						}
+                    </td>
                     <td>
                         @foreach (var genre in book.Genres)
                         {
-                            <span>@genre.Name, </span>
+                            <span>@genre.Name</span>
+                            @if (genre != book.Genres.Last())
+							{
+								<span> - </span>
+							}
                         }
                     </td>
                     <td>@book.Price</td>

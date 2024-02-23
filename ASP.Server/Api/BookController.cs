@@ -66,7 +66,7 @@ namespace ASP.Server.Api
         public ActionResult<BookDto> GetBook(int id)
         {
             var book = libraryDbContext.Books
-                .Include(b => b.Author)
+                .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .FirstOrDefault(b => b.Id == id);
 

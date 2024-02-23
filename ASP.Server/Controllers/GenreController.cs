@@ -65,7 +65,7 @@ namespace ASP.Server.Controllers
 
 
         // Delete method
-        [HttpPost("delete/{id}")]
+        [HttpPost("/Genre/Delete/{id}")]
         [OpenApiIgnore]
         public ActionResult<Genre> Delete(int id)
         {

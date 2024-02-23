@@ -80,10 +80,10 @@
     <span asp-validation-for="Name" class="text-danger"></span>
 
     <div class="input-group">
-        <label asp-for="Author">Author</label>
-        <input name="Author" asp-for="Author.Name" />
+        <label asp-for="Authors">Authors</label>
+        <input name="Authors" asp-for="Authors" value="@string.Join(", ", Model.Authors)" />
     </div>
-    <span asp-validation-for="Author" class="text-danger"></span>
+    <span asp-validation-for="Authors" class="text-danger"></span>
 
     <div class="input-group">
         <label asp-for="Genres">Select Genres</label>

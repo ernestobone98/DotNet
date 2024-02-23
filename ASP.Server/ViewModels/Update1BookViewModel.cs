@@ -19,8 +19,10 @@ namespace ASP.Server.ViewModels
         [Required(ErrorMessage = "You need at least 1 genre"), MinLength(1)]
         public List<int> Genres { get; set; }
 
+        public IEnumerable<Genre> AllGenres { get; set; }
+
         [Required]
-        public string Author { get; set; }
+        public string Authors { get; set; }
         
         public string Content { get; set; }
         

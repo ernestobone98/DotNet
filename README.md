@@ -106,10 +106,10 @@ Options :
   - [x] On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vraix)
   - [x] La class autheur à besoin d'au minimum du nom de l'autheur
 - [x] Afficher des filtres dans la liste des livres pour filtrer par autheurs / genres
-- Une page affichants les statistiques sur :
-  - le nombre de libres total disponible
-  - le nombre de livres par autheur
-  - Le nombre maximum, minmum, median et moyen de mots d'un livre
+- [x] Une page affichants les statistiques sur :
+  - [x] le nombre de libres total disponible
+  - [x] le nombre de livres par autheur
+  - [x] Le nombre maximum, minmum, median et moyen de mots d'un livre
 - Importer les details d'un livre par l'OpenLibrary
   - https://openlibrary.org/
   - Pouvoir rentrer un contenu + isbn

@@ -11,13 +11,20 @@
              x:DataType="vm:InDesignDetailsBook"
              Title="DetailsBook">
 
-    <Grid>
-        <Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!-- il faut afficher les information du livre: Nom, Auteur, Prix, Genres-->
-        <!-- Mais pas le contenu ! -->
-        <!-- N'oublier pas le bouton pour aller lire le livre. La commande ReadCommand est faite pour ca ! -->
-    </Grid>
+                <!-- il faut afficher les information du livre: Nom, Auteur, Prix, Genres-->
+                <!-- Mais pas le contenu ! -->
+                <!-- N'oublier pas le bouton pour aller lire le livre. La commande ReadCommand est faite pour ca ! -->
+                <Label Text="{Binding Name}" FontSize="Large" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" />
+                <StackLayout Grid.Row="1" Padding="10">
+                    <Label Text="{Binding Author}" FontSize="Medium" />
+                    <Label Text="{Binding Price}" FontSize="Medium" />
+                    <Label Text="{Binding Genres}" FontSize="Medium" />
+                    <Button Text="Read" Command="{Binding ReadCommand}" CommandParameter="{Binding CurrentBook}"/>
+                </StackLayout>
+            </Grid>
 </ContentPage>

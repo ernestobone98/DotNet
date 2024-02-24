@@ -19,7 +19,6 @@
     <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <VerticalStackLayout Padding="30,0"
                              Spacing="50">
-
             <!-- 
             A vous de créer la liste avec le bon binding. Une <ListBox> fera l'affaire 
             La propriété ItemsSource doit pointé vers la propiété Books de votre dataContext actuelle 
@@ -48,7 +47,7 @@
                                     <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
                                     <Frame BackgroundColor="SteelBlue" Padding="8,5" CornerRadius="5">
                                         <Button Text="Détails" BackgroundColor="SteelBlue"
-                                                Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference Name=ListBooksPage}}"
+                                                Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference Name=ListBooksPage Path=GoToDetailsCommand}}"
                                                 CommandParameter="{Binding .}"
                                                 TextColor="White"/>
                                     </Frame>
@@ -57,10 +56,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            
-            
-            
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

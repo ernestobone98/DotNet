@@ -33,6 +33,26 @@ namespace MAUI.Reader.Service
 
         public async void GoBack() => await App.Current.MainPage.Navigation.PopAsync();
 
+        public async void NavigateToDetails(Book book)
+        {
+            if (!viewMapping.ContainsKey(typeof(ViewModel.DetailsBook)))
+            {
+                throw new KeyNotFoundException("DetailsBook ViewModel not found in viewMapping.");
+            }
+            ContentPage detailsPage = Activator.CreateInstance(viewMapping[typeof(ViewModel.DetailsBook)]) as ContentPage;
+            
+            if (detailsPage != null && detailsPage.BindingContext is ViewModel.DetailsBook detailsViewModel)
+            {
+                // Set the book to the view model
+                detailsViewModel.SelectedBook = book;
+                await App.Current.MainPage.Navigation.PushAsync(detailsPage);
+            }
+            else
+            {
+                throw new InvalidOperationException("Failed to create DetailsBook page or set its ViewModel.");
+            }
+        }
+
         /// <summary>
         /// Permet de changer la page afficher par la <see cref="Frame"/>
         /// </summary>

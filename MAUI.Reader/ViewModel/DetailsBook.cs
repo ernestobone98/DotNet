@@ -5,14 +5,16 @@ using MAUI.Reader.Model;
 
 namespace MAUI.Reader.ViewModel
 {
-    public partial class DetailsBook(Book book) : INotifyPropertyChanged
+    // Make sure to remove the ';' after the namespace declaration
+    [QueryProperty("Book", "Book")]
+    public partial class DetailsBook : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Une commande permet de recevoir des évènement de l'IHM
         public ICommand ReadBook2Command { get; init; } = new RelayCommand<Book>(x => { /* A vous de définir la commande */ });
 
-        // Vous pouvez aussi utiliser cette forme pour définir une commande. La ligne du dessus fait strictement la même chose, choisissez une des 2 formes
+        // You can also use this form to define a command. The line above does exactly the same thing; choose one of the 2 forms
         [RelayCommand]
         public void ReadBook(Book book)
         {
@@ -20,7 +22,13 @@ namespace MAUI.Reader.ViewModel
         }
 
         // n'oublier pas faire de faire le binding dans DetailsBook.xaml !!!!
-        public Book CurrentBook { get; init; } = book;
+        public Book SelectedBook { get; set; }
+
+        // Constructor to accept Book parameter and initialize SelectedBook
+        public DetailsBook(Book book)
+        {
+            SelectedBook = book;
+        }
     }
 
     /* Cette classe sert juste a afficher des donnée de test dans le designer */

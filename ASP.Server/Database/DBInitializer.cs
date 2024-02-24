@@ -110,7 +110,7 @@ namespace ASP.Server.Database
                                     Price = 10.99f,
                                     Content = "Jay Gatsby, a mysterious millionaire, pursues his lost love, Daisy Buchanan, amidst the " +
                                     "glamour and excess of the Roaring Twenties.",
-                                    Genres = new List<Genre> { Romance, Classic }
+                                    Genres = new List<Genre> { Romance }
                                 },
                                 new Book()
                                 {

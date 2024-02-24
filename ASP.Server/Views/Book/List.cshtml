@@ -70,12 +70,34 @@
         opacity: 0.8;
     }
 
+    .filter-section {
+		margin-bottom: 20px;
+	}
+
 </style>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 <div class="container mt-5">
     <h1>Liste des livres:</h1>
+    <div class="filter-section">
+        <label for="genreFilter">Filter by Genre:</label>
+        <select id="genreFilter" class="form-control" onchange="filterBooksByGenre(this.value)">
+            <option value="">All Genres</option>
+            @foreach (var genre in Model.SelectMany(book => book.Genres).Distinct())
+            {
+                <option value="@genre.Name">@genre.Name</option>
+            }
+        </select>
+        <label for="authorFilter">Filter by Author:</label>
+        <select id="authorFilter" class="form-control" onchange="filterBooksByGenreAndAuthor()">
+            <option value="">All Authors</option>
+            @foreach (var author in Model.SelectMany(book => book.Authors).Distinct())
+            {
+                <option value="@author.Name">@author.Name</option>
+            }
+        </select>
+    </div>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -90,9 +112,9 @@
         <tbody>
             @foreach (var book in Model)
             {
-                <tr>
+                <tr class="book-row">
                     <td>@book.Name</td>
-                    <td>
+                    <td class="authors">
                         @foreach (var author in book.Authors)
 						{
 							<span>@author.Name</span>
@@ -102,7 +124,7 @@
 							}
 						}
                     </td>
-                    <td>
+                    <td class="genres">
                         @foreach (var genre in book.Genres)
                         {
                             <span>@genre.Name</span>
@@ -155,4 +177,44 @@
             }
         });
     });
+
+    function filterBooksByGenreAndAuthor() {
+        var genreFilter = document.getElementById('genreFilter');
+        var authorFilter = document.getElementById('authorFilter');
+
+        var selectedGenre = genreFilter.value;
+        var selectedAuthor = authorFilter.value;
+
+        var rows = document.querySelectorAll('.book-row');
+
+        rows.forEach(function (row) {
+            var genreCell = row.querySelector('.genres');
+            var genres = genreCell.textContent.trim().split(' - ');
+
+            var authorCell = row.querySelector('.authors');
+            var authors = authorCell.textContent.trim().split(' - ');
+
+            genres = genres.map(function (genre) {
+                return genre.trim();
+            });
+
+            authors = authors.map(function (author) {
+                return author.trim();
+            });
+
+            var matchesGenre = genres.some(function (genre) {
+                return genre === selectedGenre;
+            });
+
+            var matchesAuthor = authors.some(function (author) {
+                return author === selectedAuthor;
+            });
+
+            if ((selectedGenre === '' || matchesGenre) && (selectedAuthor === '' || matchesAuthor)) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 </script>

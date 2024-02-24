@@ -1,0 +1,52 @@
+﻿@using ASP.Server.Models
+@using ASP.Server.ViewModels
+@model StatsViewModel
+@{
+    ViewData["Title"] = "Stats Page";
+}
+
+<style>
+
+    .stats{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		padding: 20px;
+		border-radius: 8px;
+		width: 400px;
+	}
+
+    .card-body {
+		background-color: #fff;
+	}
+
+	.card-title {
+		font-weight: bold;
+	}
+
+	.card-text {
+		margin-bottom: 10px;
+	}
+
+</style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<div class="stats">
+    
+    <div class="card" style="width: 18rem;">
+		<div class="card-body">
+			<h5 class="card-title">Stats</h5>
+            <p class="card-text">Number of books: @Model.TotalBooks</p>
+            <p class="card-text">Number of genres: @Model.TotalGenres</p>
+            <p class="card-text">Number of authors: @Model.TotalAuthors</p>
+            <p class="card-text">Average price: @Model.AveragePrice</p>
+            <p class="card-text">Average content lenght: @Model.AverageContentLength</p>
+        </div>
+    </div>
+</>

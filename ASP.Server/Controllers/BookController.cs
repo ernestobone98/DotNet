@@ -152,6 +152,44 @@ namespace ASP.Server.Controllers
         }
 
 
+        public ActionResult<IEnumerable<Book>> Stats()
+        {
+            // Retrieve all books from the database
+            var books = libraryDbContext.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .ToList();
+
+            // Calculate the average price of all books
+            var averagePrice = books.Average(b => b.Price);
+            averagePrice = (float)Math.Round(averagePrice, 2);
+
+            // Calculate the total number of books
+            var totalBooks = books.Count();
+
+            // Calculate the total number of authors
+            var totalAuthors = books.SelectMany(b => b.Authors).Distinct().Count();
+
+            // Calculate the total number of genres
+            var totalGenres = books.SelectMany(b => b.Genres).Distinct().Count();
+
+            // Calculate the average characters in the content of all books
+            var averageContentLength = books.Average(b => b.Content.Length);
+            averageContentLength = Math.Round(averageContentLength, 2);
+
+            // Create a new instance of the StatsViewModel
+            var stats = new StatsViewModel
+            {
+                AveragePrice = averagePrice,
+                TotalBooks = totalBooks,
+                TotalAuthors = totalAuthors,
+                TotalGenres = totalGenres,
+                AverageContentLength = averageContentLength
+            };
+
+            return View(stats);
+        }
 
     }
+
 }

@@ -103,7 +103,7 @@ Un utilisateur doit pouvoir :
 
 Options :
 - [x] Remplacer le champs autheur (de type string) de la classe livre par une laison vers une classe Autheur
-  - [x] On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vraix)
+  - [x] On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vrai)
   - [x] La class autheur à besoin d'au minimum du nom de l'autheur
 - [x] Afficher des filtres dans la liste des livres pour filtrer par autheurs / genres
 - [x] Une page affichants les statistiques sur :
@@ -114,6 +114,8 @@ Options :
   - https://openlibrary.org/
   - Pouvoir rentrer un contenu + isbn
   - récupéré l'auteur + description et l'ecrire en base
+- [x] BONUS PAR NOUS: Pendant la Création d'un Genre, il est possible de lui associer un livre déjà existant.
+      - Il est possible de filtrer les livres par nom.
 
 Une ébauche de ce qui est attendu ce trouve dans ASP.Server/Controllers/BookController.cs et GenreController.cs
 

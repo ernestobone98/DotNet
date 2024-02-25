@@ -94,22 +94,22 @@ Il est nécessaire pour ces fonctionnalités de mettre à disposition de l’uti
 
 Un utilisateur doit pouvoir :
 
-- ajouter des livres dans la bibliothèque
+- [x] ajouter des livres dans la bibliothèque
 - [x] supprimer des livres de la bibliothèque
 - [x] Consulter la liste de tous les livres
-- Consulter la liste de tous les genres
-- Faire une interface pour ajouter de nouveaux genres 
+- [x] Consulter la liste de tous les genres
+- [x] Faire une interface pour ajouter de nouveaux genres 
 - [x] Modifier un livre existant
 
 Options :
 - [x] Remplacer le champs autheur (de type string) de la classe livre par une laison vers une classe Autheur
   - [x] On considère qu'un livre n'a qu'un seul et unique autheur (même si dans la réalité ce n'est pas vraix)
   - [x] La class autheur à besoin d'au minimum du nom de l'autheur
-- Afficher des filtres dans la liste des livres pour filtrer par autheurs / genres
-- Une page affichants les statistiques sur :
-  - le nombre de libres total disponible
-  - le nombre de livres par autheur
-  - Le nombre maximum, minmum, median et moyen de mots d'un livre
+- [x] Afficher des filtres dans la liste des livres pour filtrer par autheurs / genres
+- [x] Une page affichants les statistiques sur :
+  - [x] le nombre de libres total disponible
+  - [x] le nombre de livres par autheur
+  - [x] Le nombre maximum, minmum, median et moyen de mots d'un livre
 - Importer les details d'un livre par l'OpenLibrary
   - https://openlibrary.org/
   - Pouvoir rentrer un contenu + isbn

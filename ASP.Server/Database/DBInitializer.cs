@@ -132,7 +132,6 @@ namespace ASP.Server.Database
 
 
             bookDbContext.SaveChanges();
-            Console.WriteLine("Database has been initialized");
         }
     }
 }

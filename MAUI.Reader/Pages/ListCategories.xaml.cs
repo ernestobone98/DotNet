@@ -3,13 +3,11 @@
     /// <summary>
     /// Interaction logic for ListBooks.xaml
     /// </summary>
-    public partial class ListBooks : ContentPage
+    public partial class ListCategories : ContentPage
     {
-        public ListBooks()
+        public ListCategories()
         {
             InitializeComponent();
         }
     }
 }
-
-

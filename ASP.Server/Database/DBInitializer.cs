@@ -71,6 +71,7 @@ namespace ASP.Server.Database
                                    "for a quiet term concentrating on Quidditch are dashed when a maniacal mass",
                                    Genres = new List<Genre>() { SF, Classic }
                                });
+            
 
             bookDbContext.SaveChanges();
         }

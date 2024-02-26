@@ -15,53 +15,43 @@
     <ContentPage.BindingContext>
         <vm:ListBooks />
     </ContentPage.BindingContext>
-    
-    <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        <VerticalStackLayout Padding="30,0"
-                             Spacing="50">
-
-            <!-- 
-            A vous de créer la liste avec le bon binding. Une <ListBox> fera l'affaire 
-            La propriété ItemsSource doit pointé vers la propiété Books de votre dataContext actuelle 
-            Utilisé ListBox.ItemTemplate pour définir comment sont affiché vos items
-            <ListBox.ItemTemplate>
+    <ContentPage.Resources>
+        <local:ListGenresToConvert x:Key="stringListToString" />
+    </ContentPage.Resources>
+    <Grid>
+        <Label Text="List of books"
+               Style="{StaticResource Headline}"
+               SemanticProperties.HeadingLevel="Level1" />
         
-            A vous de faire afficher les champs que vous voulez afficher pour savoir quel sont les livre disponible
-            <TextBlock Text="{Binding MyPropertyOnMyObjectBook}"/>
-            N'oublier pas non plus de rajouter un boutton quelque part pour allez voir les détails de votre livre
-            Les propriété Command et CommandParameter pourrons vous aider ! 
-            Command="{Binding DataContext.ItemSelectedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}}" 
-            CommandParameter="{Binding .}"
             
-            Du à un Bug dans le toolkit suivez les info indiqué ici:
-            https://stackoverflow.com/questions/76681900/binding-contextactions-menuitem-with-communitytoolkit-mvvm-in-maui
-            
-            -->
-            <Label Text="List of books"
-                   Style="{StaticResource Headline}"
-                   SemanticProperties.HeadingLevel="Level1" />
-                <ListView ItemsSource="{Binding Books}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetBooksCommand}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Book">
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal" Padding="10" BackgroundColor="LightGray" Spacing="10">
-                                    <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
-                                    <Frame BackgroundColor="SteelBlue" Padding="8,5" CornerRadius="5">
-                                        <Button Text="Détails" BackgroundColor="SteelBlue"
-                                                Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference Name=ListBooksPage}}"
-                                                CommandParameter="{Binding .}"
-                                                TextColor="White"/>
-                                    </Frame>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            
-            
-            
-
-        </VerticalStackLayout>
-    </ScrollView>
+        <ListView HasUnevenRows="True" VerticalOptions="FillAndExpand" ItemsSource="{Binding Books}" IsPullToRefreshEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Book">
+                    <ViewCell>
+                        <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="10" Spacing="10">
+                            <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            <Label Text=" | " VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            <Label Text="{Binding Author.Name}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            <Label Text=" | " VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            
+                            <!-- ICI insérer Liste de genres avec le champs Genres qui est une liste -->
+                            <Label Text="{Binding Genres, Converter={StaticResource stringListToString}}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            
+                            <Label Text=" | " VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            <Label Text="{Binding Price}" VerticalOptions="CenterAndExpand" FontSize="24" FontAttributes="Bold"/>
+                            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand">
+                                <Frame BackgroundColor="SteelBlue" Padding="8,5" CornerRadius="5">
+                                    <Button Text="Détails" BackgroundColor="SteelBlue"
+                                            Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference Name=ListBooksPage}}"
+                                            CommandParameter="{Binding .}"
+                                            TextColor="White"/>
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+        
 </ContentPage>
-

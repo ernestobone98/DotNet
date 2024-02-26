@@ -6,7 +6,7 @@ namespace MAUI.Reader.Service
 {
     public class LibraryService
     {
-        private const string BASE_URL = "https://localhost:5001/api/book";
+        private const string BASE_URL = "https://localhost:5001/api";
 
         private HttpClient client;
         // A remplacer avec vos propre données !!!!!!!!!!!!!!
@@ -35,7 +35,7 @@ namespace MAUI.Reader.Service
         public async Task<List<Book>> GetBooksAsync()
         {
             List<Book> books = new();
-            var url = $"{BASE_URL}?offset={0}&limit={10}";
+            var url = $"{BASE_URL}/book?offset={0}&limit={10}";
             try
             {
                 var response = await client.GetAsync(url);
@@ -47,6 +47,28 @@ namespace MAUI.Reader.Service
                 }
 
                 return books;
+            }
+            catch (Exception e)
+            {
+                return [];
+            }
+        }
+        
+        public async Task<List<Genre>> GetGenresAsync()
+        {
+            List<Genre> genres = new();
+            var url = $"{BASE_URL}/Genre";
+            try
+            {
+                var response = await client.GetAsync(url);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    genres = await response.Content.ReadFromJsonAsync<List<Genre>>();
+                }
+
+                return genres;
             }
             catch (Exception e)
             {

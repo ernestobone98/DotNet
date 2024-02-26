@@ -57,7 +57,6 @@ namespace MAUI.Reader.ViewModel
             }
         }
         
-        
         // Méthode appelée lorsque l'utilisateur sélectionne un livre
         private void OnItemSelected(Book selectedBook)
         {
